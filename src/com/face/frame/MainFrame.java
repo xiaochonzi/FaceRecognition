@@ -226,6 +226,7 @@ public class MainFrame {
 //				Image image = Toolkit.getDefaultToolkit().getImage(persons.get(0).getPersonImage());
 //				regCanvas.setImage(image);
 				FaceRecognition faceRecognition = new FaceRecognition();
+				regCanvas.setImage(null);
 				faceRecognition.lern();
 			}
 		});
@@ -310,6 +311,13 @@ class Client implements Runnable{
                 recCanvas.setImage(image);
                 int id = faRecognition.recoginzeFileList(end);
                 Person p = map.get(id+"");
+                if(p==null){
+                  	regCnavas.setImage(null);
+                	jlName.setText("");
+                	jlLevel.setText("");
+                	addrArea.setText("");
+                	continue;
+                }
                 end = p.getPersonImage();
                 image = toolkit.createImage(end);
                 regCnavas.setImage(image);

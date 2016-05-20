@@ -98,6 +98,9 @@ public class FaceRecognition {
 		CvMat trainPersonNumMat;
 		float confidence = 0.0f;
 		IplImage testImg = cvLoadImage(testFile, CV_LOAD_IMAGE_GRAYSCALE);
+		if(testImg == null){
+			return -1;
+		}
 		trainPersonNumMat = loadTrainingData();
 		int iNearest;
 		int nearest;

@@ -28,7 +28,7 @@ public class Kinect {
 			InetAddress addr = InetAddress.getLocalHost();
 			while((srcImg = grabber.grab())!=null){
 				final String fileName ="e:/temp/"+ PicUtils.date()+".png";
-				IplImage dstImg = faceDetect.faceTrick(srcImg,storage);
+				IplImage dstImg = faceDetect.faceTrick(srcImg,storage,fileName);
 				dstFrame.showImage(dstImg);
 				new Thread(new Server(addr, fileName)).start();
 			}

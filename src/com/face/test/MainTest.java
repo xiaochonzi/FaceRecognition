@@ -43,10 +43,10 @@ public class MainTest {
 			CvMemStorage storage = CvMemStorage.create();
 			InetAddress addr = InetAddress.getLocalHost();
 			while((srcImg = grabber.grab())!=null){
-				IplImage dstImg = faceDetect.faceTrick(srcImg,storage);
-				dstFrame.showImage(dstImg);
 				final String fileName ="e:/temp/"+ PicUtils.date()+".png";
-				PicUtils.saveImage(srcImg, fileName);
+				IplImage dstImg = faceDetect.faceTrick(srcImg,storage,fileName);
+				dstFrame.showImage(dstImg);
+				//PicUtils.saveImage(dstImg, fileName);
 				new Thread(new Server(addr, fileName)).start();
 			}
 		} catch (Exception e) {

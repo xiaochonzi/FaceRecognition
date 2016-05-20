@@ -30,7 +30,7 @@ public class FaceDetect {
 			File file1 = new File("classifier/haarcascade_frontalface_alt.xml");
 			File file2 = new File("classifier/haarcascade_frontalface_alt2.xml");
 			File file3 = new File("classifier/haarcascade_frontalface_default.xml");
-			classifierName = file2.getAbsolutePath();
+			classifierName = file1.getAbsolutePath();
 			classifier = new CvHaarClassifierCascade(cvLoad(classifierName));
 			if (classifier.isNull()) {
 				System.err.println("Error loading classifier file \"" + classifierName + "\".");
@@ -55,18 +55,26 @@ public class FaceDetect {
 		// }
 		// contour = contour.h_next();
 		// }
-		CvSeq faces = cvHaarDetectObjects(grayImg, classifier, storage, 1.1f, 2, CV_HAAR_DO_ROUGH_SEARCH);
+		CvSeq faces = cvHaarDetectObjects(
+				grayImg, //被检测图像
+				classifier, //分类器
+				storage, // 用来存储检测到的一序列候选目标矩形框的内存区域
+				1.2f, // 在前后两次相继的扫描中，搜索窗口的比例系数
+				2, // 构成检测目标的相邻矩形的最小个数
+				CV_HAAR_DO_CANNY_PRUNING);
 		return faces;
 	}
 
-	public IplImage faceTrick(IplImage srcImg, CvMemStorage storage) {
+	public IplImage faceTrick(IplImage srcImg, CvMemStorage storage,String fileName) {
 		CvSeq faces = faceDect(srcImg, storage);
 		int total = faces.total();
 		if(total > 2){
 			CvFont font = new CvFont();
-			cvInitFont(font, CV_FONT_HERSHEY_SCRIPT_COMPLEX, 1, 1);
-			cvPutText(srcImg, "warning", cvPoint(5, 5), font, CvScalar.RED);
+			cvInitFont(font, CV_FONT_HERSHEY_SIMPLEX, 1, 1);
+			cvPutText(srcImg, "WARNING!", cvPoint(5, 20), font, CvScalar.RED);
 		}
+		
+		
 		for (int i = 0; i < total; i++) {
 			CvRect r = new CvRect(cvGetSeqElem(faces, i));
 			int x = r.x(), y = r.y(), w = r.width(), h = r.height();
@@ -74,7 +82,7 @@ public class FaceDetect {
 			IplImage temp = cvCreateImage(cvSize(w, h), srcImg.depth(), srcImg.nChannels());
 			cvSetImageROI(srcImg, r);
 			cvCopy(srcImg, temp);
-			//cvSaveImage(fileName, temp);
+			PicUtils.saveImage(temp, fileName);
 			cvResetImageROI(srcImg);
 			cvRectangle(srcImg, cvPoint(x, y), cvPoint(x + w, y + h), CvScalar.RED, 1, CV_AA, 0);
 		}

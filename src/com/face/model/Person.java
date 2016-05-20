@@ -60,9 +60,9 @@ public class Person {
 	}
 	@Override
 	public String toString() {
-		return "Person [id=" + id + ", personNo=" + personNo + ", personName=" + personName + ", personImage="
-				+ personImage + ", personCardId=" + personCardId + ", personAddr=" + personAddr + ", personLevel="
-				+ personLevel + ", date=" + date + "]";
+		return "编号:" + personNo + ", 姓名:" + personName + ", 照片:"
+				+ personImage + ", 身份证:" + personCardId + ", 地址:" + personAddr + ", 危险级别:"
+				+ personLevel + ", 日期=" + date + "";
 	}
 	
 	

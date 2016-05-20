@@ -221,12 +221,12 @@ public class InsertFrame extends JFrame implements ActionListener,MouseListener{
 		JFileChooser jfc=new JFileChooser("E:/temp");
 		//创建jpg、gif文件类型过滤器
 		FileFilter filterJpeg = new FileNameExtensionFilter("JPEG file", "jpg", "jpeg");
-		FileFilter filterGif = new FileNameExtensionFilter("PNG file", "png");
+		FileFilter filterPNG = new FileNameExtensionFilter("PNG file", "png");
 		//删除默认的文件后缀类型过滤器
 		jfc.removeChoosableFileFilter(jfc.getFileFilter());
 		//为文件对话框设置后缀过滤器
+		jfc.addChoosableFileFilter(filterPNG);
 		jfc.addChoosableFileFilter(filterJpeg);		
-		jfc.addChoosableFileFilter(filterGif);
 		//显示文件对话框
 		jfc.showDialog(this,"请选择要打开的图片");
 		//获取图片文件路径
